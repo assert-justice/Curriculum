@@ -419,7 +419,7 @@ This has been a short introduction to modules. We'll make more use of them later
 
 We have looked at expressions in some detail but so far we have been using Python as a fancy calculator. Now we can talk about statements. Unlike expressions, statements do not return a value. They are designed to change the state of the program. 
 
-What is state? 
+What is state? Well kind of what it sounds like. Imagine playing a video game like Super Mario. At any time there is a bunch of information the game is keeping track of like Mario's x and y position, what powerups he has, what frame of animation he is using, and so on. This goes for the enemies and hazards on the level too. All that information at a particular time is the game's state. Similarly we will store and manipulate information with our program. Every time we change a bit of data we are changing the program's state and the mechanisms we use to do that are statements.
 
 ### Assignment
 
@@ -564,7 +564,7 @@ It prints two lines! What happened? Well let's mentally step through the code.
 * Then we move on to the next `if` statement and evaluate `age < 21`. This is also `True` and so we print `"You are almost old enough."`
 * We do not get to the `else` statement because the last conditional evaluated to `True`.
 
-So what's different? When you combine `if`, `elif`, and `else` statements they act as a chain of conditionals. You can be guaranteed that one and exactly one of the indented blocks of code will be executed. You can chain together as many conditionals as you like this way. We could introduce more `elif` statements and have, for example, unique messages for any age we like.
+So what's different? When you combine `if`, `elif`, and `else` statements they act as an unbroken chain of control flow statements. You can be guaranteed that one and exactly one of the indented blocks of code will be executed. You can chain together as many statements as you like this way. We could introduce more `elif` statements and have, for example, unique messages for any age we like.
 
 ### While, Break, and Continue
 
@@ -678,11 +678,50 @@ What is `[REDACTED]`? All shall be revealed.
 
 ## Functions
 
+What is a function? Well if you ask a mathematician they'll answer (in layman's terms) that it is a one to one relation between the elements of two sets. 
+So for example `f(x) = y*2` is a function that maps real numbers to real numbers of twice the magnitude. Every value of `x` has one and exactly one corresponding value of `y`.
 
-
+Functions in most programming languages are related but have a number of important differences which we will go over. For our purposes you can think of functions as tools. A function might do some tedious task that we would need to repeat many times. Instead of copy and pasting code everywhere we can create a function to make the task easier.
 ### Anatomy of a Function
+Let's look at an example of a function.
 
-### Arguments vs. Parameters
+```python
+def add(x, y):
+    return x + y
+```
+So we have some new keywords `def` and `return`. `def` means that we are defining a function, in this case a function called `add`. Just like variable names function names can be whatever we like but their name should indicate what they are for.
+After the name we get parentheses and between them are two variables `x` and `y` separated by a comma. I say variables but these are technically parameters. I'll get into the distinction in a moment. After the parentheses we get a colon and an indented block of code just like an `if` statement. That brings us to the `return` keyword and the expression `x + y`.
+
+Now if we run a script with only those two lines in it nothing will happen. We have defined our function but we have not used it. If functions are tools then we have made a hammer but we haven't swung it yet. Let's finish the snippet:
+```python
+def add(x, y):
+    return x + y
+
+a = add(10, 5)
+print(a) # should print 15 or something is very wrong
+```
+
+Fabulous. I'm going to overexplain what happens when we execute these four lines of code. We can think about functions like black boxes. They accept one or more values and return a value. (This is a bit of a fib but it's accurate enough for now).
+The values we supply to a function are called arguments. In this case our arguments are `10` and `5`. 
+
+When you run a script Python reads through it line by line and executes whatever it is told to. The first lines it reaches define the function. After the definition we tell Python what we want the function to do in its body, in that indented block of code. After that we get to `a = add(10, 5)` where we are saying "pass `10` and `5` to the function `add` and store whatever the function returns to the variable `a`". 
+
+This act of using a function is called "calling" a function. When we call a function you can think of Python as "jumping" to where that function is defined, arguments in tow. It stores those arguments in the variables `x` and `y`. Variables that contain arguments are called parameters.
+
+When we get to the body of the function we find the line `return x + y`. First we evaluate the expression `x + y` which is `15` in our case. Then we use the `return` statement. When we return from a function we "jump" back to where we called it with the returned value. So in our case `add(10, 5)` evaluates to `15`. We set `a` to `15` and we print it out!
+
+Woof that was a lot to say about some very simple code. Get yourself a glass of water or something.
+
+### Arguments and Parameters
+
+So I said I fibbed earlier. It turns out a function does not have to accept any arguments. Check out the following:
+
+```python
+def pi():
+    return 3.14159
+```
+
+That is totally valid Python. Our `pi` function does not accept any arguments but it returns an approximate value for pi.
 
 ### The Power of Return
 
