@@ -76,7 +76,7 @@ print(-27)
 
 #### Floats
 
-Missing decimal places? Well here you go. Floating point numbers can store just about any real number.
+Missing decimal places? Well here you go. Floating point numbers can store just about any real number albeit with limited precision.
 
 ```python
 print(0.5)
@@ -106,7 +106,7 @@ We use quotation marks to tell Python the characters between the quotes are a st
 
 #### Exercises
 
-Use the print function to print out the following information in the appropriate data type. If you don't want to use your info use the president or Lady Gaga or something.
+Use the print function to print out the following information in the appropriate data type. If you don't want to use your info use the president or Lady Gaga or some.
 
 Your name.
 
@@ -183,7 +183,7 @@ This expression evaluates to `False`. Why? Because `and` only evaluates to `True
 
 We have one more Boolean operator to look at: `or`.
 
-Let's change our example to what will be the first of many of my patented **Terrible Car Analogies**. Let's say I have a red car. If I say "My car is red or it is black." Is that a true statement or not? And of course, how would we represent that in Python? Behold:
+Let's change our example to what will be the first of many of my patented ***Terrible Car Analogies***. Let's say I have a red car. If I say "My car is red or it is black." Is that a true statement or not? And of course, how would we represent that in Python? Behold:
 
 ```python
 print(True or False)
@@ -311,7 +311,7 @@ What will the following print out?
 print(234578263457 % 2)
 ```
 
-You don't need to use a calculator. In fact, you can tell at a glance. What is the answer? And why is it easy to figure out? Why is it easier than `234578263457 % 2`?
+You don't need to use a calculator. In fact, you can tell at a glance. What is the answer? And why is it easy to figure out? Why is it easier than `234578263457 % 3`?
 
 ### String Operators
 
@@ -336,6 +336,12 @@ print("Repetitive" * 5) # prints RepetitiveRepetitiveRepetitiveRepetitiveRepetit
 ```
 
 Don't try to multiply a string by a string, or a float. What would that even do?
+
+We can convert almost anything in Python to a string with the `str` function. For example
+
+```python
+print("One plus two plus three equals " + str(1+2+3)) # prints "One plus two plus three equals 6"
+```
 
 ### Comparison Operators
 
@@ -407,7 +413,7 @@ import random
 print( random.randint(1, 6) ) # prints out a number x where 1 <= x <= 6
 ```
 
-This is the first function we have looked at that accepts multiple arguments. Again we are using the `random` module but this time we are calling the `randint` function from that module. You might have guessed `randint` is short for "random integer". You'll see that instead of passing zero or one argument to the function we are passing two, the integer values `1` and `6` separated by a comma. The first number is the minimum random value and the second one is the maximum value. So the snippet will print out a number between `1` and `6` inclusive. Why did I pick those numbers? Because it's like a die, a regular six sided die. 
+This is the first function we have looked at that accepts multiple arguments. Again we are using the `random` module but this time we are calling the `randint` function from that module. You might have guessed `randint` is short for "random integer". You'll see that instead of passing zero or one arguments to the function we are passing two, the integer values `1` and `6` separated by a comma. The first number is the minimum random value and the second one is the maximum value. So the snippet will print out a number between `1` and `6` inclusive. Why did I pick those numbers? Because it's like a die, a regular six sided die. 
 
 This has been a short introduction to modules. We'll make more use of them later on and eventually write our own!
 
@@ -652,7 +658,7 @@ Output:
 8
 ```
 
-2: Write a loop that prints all of the numbers less than `10` that are evenly divisible by `3` and `5`. Remember the modulo operator!
+2: Write a loop that prints all of the numbers less than `10` that are evenly divisible by `3` or `5`. Remember the modulo operator!
 
 Output:
 ```python
@@ -712,7 +718,7 @@ When we get to the body of the function we find the line `return x + y`. First w
 
 Woof that was a lot to say about some very simple code. Get yourself a glass of water or something.
 
-### Arguments and Parameters
+### Arguments, Parameters, and the Power of Return
 
 So I said I fibbed earlier. It turns out a function does not have to accept any arguments. Check out the following:
 
@@ -723,17 +729,280 @@ def pi():
 
 That is totally valid Python. Our `pi` function does not accept any arguments but it returns an approximate value for pi.
 
-### The Power of Return
+A function also doesn't have to return anything.
 
-### Scope, Lambdas, and Closures
+```python
+def greet(name):
+    print("Hello " + name + "!")
+
+a = greet("Jill") # prints "Hello Jill!"
+print(a) # prints 'None'
+```
+
+That `greet` function doesn't return anything! It is useful for something besides that, its "side effects" (more on these later). When we try to assign the result of `greet` to a variable that variable `a` is set to `None`. What is `None`? Well it's a null value that Python uses in situations like this where you ask for a value that doesn't exist. The side effect we want is to print to the console and we can do that simply by calling the function. We don't need to assign its return value to anything.
+
+### Function Scope
+
+Let's return to the idea of a function as a "black box". The body of a function lives in a "scope", a sort of one way barrier making the contents of a function unavalible to the rest of a program except via `return`. That sounds a little abstract let's look at an example.
+
+```python
+# WARNING! Code has an intentional error
+
+def adder(x, y):
+    total = x + y
+    return total
+
+a = adder(10, 5)
+print(a) # prints 15
+print(total) # error! 'total' is not defined
+```
+
+So what happened here? We tried to use the variable `total` but it was defined inside of the function's scope and so is not accessible outside that function.
+
+```python
+name = "Jill"
+
+def greet():
+    print("Hello " + name + "!")
+
+greet() # prints "Hello Jill!"
+```
+
+I mentioned scope is a one way barrier. The variable `name` is floating out there in the top level of the script, what we call "global scope". The scope of `greet` is inside global scope so it can read from the `name` variable just fine. But! Reading is all it can do.
+
+```python
+name = "Jill"
+
+def greet():
+    # we only greet Bob around here
+    name = "Bob"
+    print("Hello " + name + "!")
+
+greet() # prints "Hello Bob!"
+print(name) # what will this print out?
+```
+
+In almost every language besides Python when we print `name` at the end of the function it would print out "Bob". Inside of the `greet` function we set the `name` variable to `"Bob"` and we can see that it does indeed print out "Hello Bob!". But Python likes to do things differently, the last line of this script prints out "Jill". 
+
+Variables in the global scope are called "global variables" and they are usually discouraged. We'll talk about why soon. Python is happy to let you read values from global variables but if you want to assign to a global variable you need to tell Python explicitly. Otherwise as in our example above Python makes a local variable called `name` and assigns to it. The variable in the function body and the variable in the global scope are different even though they are both called `name`.
+
+```python
+name = "Jill"
+
+def greet():
+    # we only greet Bob around here
+    global name
+    name = "Bob"
+    print("Hello " + name + "!")
+
+greet() # prints "Hello Bob!"
+print(name) # prints "Bob"
+```
+
+We've only added one line: `global name` at the top of the function. `global` is another one of those reserved keywords and it tells Python "no, for real, this variable is global" and now the script works as expected. 
+
+There is another keyword `nonlocal` which works essentially the same way but lets you mutate the state of a variable that is not global but is in a function's outer scope. As always it's best to look at an example.
+
+```python
+def printSum(x, y):
+    def sum():
+        nonlocal x, y
+        return x + y
+    spam = sum()
+    print(spam)
+
+printSum(5, 10)
+```
+
+Our function `printSum` accepts two numbers. Inside of that function we define a function called `sum`. 
+
+### Globals and Purity
+
+### Bits and bobs
+This section covers some more advanced aspects of functions. Most texts would save them for much later or elide them entirely but this is not most texts. I'm bringing up these topics now because they shouldn't intimidate you and your picture of functions in Python would be incomplete without them. So strap in!
+
+#### Default arguments
+
+#### Multiple return
+
+#### Recursion
+
+We have seen that functions can call other functions. But... what if I told you functions could call themselves? What would that even look like?
+
+```python
+def countDown(count):
+    if count > 0:
+        print(count)
+        countDown(count - 1)
+
+countDown(10) # prints the numbers 10 to 1
+```
+
+Look at that. We have looping behavior without a `while` in sight. Counting up is slightly more complicated because we need to know when to stop.
+
+```python
+def countUp(count, i = 0):
+    if i < count:
+        print(i)
+        countUp(count, i + 1)
+
+countUp(10) # prints the numbers 0  to 9
+```
+
+Compare that code to the `while` loop that does the same thing and you'll see basically the same bits in a different arraingement. Now both of these functions have an `if` statement inside of them and there is a good reason for that. Just like with `while` it is easy to get in infinite loops with recursion. Fortunately Python will actually throw an error if you recurse too many times.The condition that stops recursion is called 
+
+```python
+def factorial(x):
+    if x > 1:
+        return x * factorial(x-1)
+    return 1
+```
+
+```python
+def fibonacchi(n):
+    if x > 1:
+        return fibonacchi(n-1) + fibonacchi(n-2)
+    return 1
+```
+
+#### First class functions
+
+Python supports first class functions which basically means functions are values that you can store in variables and datastructures and you can even pass to and return from functions. 
+
+```python
+def doubler(x):
+    return x * 2
+
+def power(x):
+    return 10 ** x
+
+def transform(f, x):
+    return f(x)
+
+print( transform(doubler, 3) ) # prints 6
+print( transform(power, 3) ) # prints 1000
+```
+
+Here we define a couple of functions `doubler` and `power` which return twice the input and ten to the input's power respectively. They both accept a number (either an `int` or `float`) as an argument and return a number. Finally we have the `transform` function. It accepts two arguments: a function and a number. It passes that number to whatever function was passed to it and returns the results.
+
+First class functions are a very powerful feature, there is a reason they have crept into basically every major programming language. As we move on we'll see more use cases.
+
+#### Lambdas
+
+A lambda or an anonymous function is a scary mathy sounding name for function that doesn't have a name. 
+
+```python
+doubler = lambda x: x * 2
+print( doubler(3) ) # yep still prints 6
+```
+
+We could rewrite our `doubler` function as the above. You can see that it has all the same bits as the original function but arrainged differently. `lambda x: x * 2` is an expression, it evaluates to a function. It starts with the reserved keyword `lambda` followed by our parameter `x`. Then a colon then the expression we were returning. You'll notice there is no `return` keyword. Lambdas can only have a single expression as their function body and they return what it evaluates to automatically. This means that a lambda cannot contain statements like `if`, `while` or even assignment. These are all very deliberate limitations. What I did above, assigning a variable to a lambda function is actually bad style. You should use `def` for named keywords. But consider our `transform` function again.
+
+```python
+def transform(f, x):
+    return f(x)
+
+a = transform(lambda x: x * 2, 5)
+print(a) # prints 10
+```
+
+This is arguably a bit harder to read and is definitly a silly example. But at least now it is obvious when you call transform exactly what operation it will apply to the argument you pass it.
+
+Finally you can pass multiple arguments to a lambda. I'm going to be bad again and assign a lambda straight to a variable. Forgive me Guido for I have sinned...
+
+```python
+product = lambda x, y: x * y
+
+print( product(3, 10) ) # prints 30
+```
+
+The parameters of this function are just seperated by commas, no parenthises needed. 
+
+Like I indicated lambda functions have taken the programming language world by storm. Understanding them will help you not just with Python but with languages that make much heavier use of them like JavaScript.
+
+#### Factory functions
+
+Last section we saw how to pass functions to functions. Now let's return some functions.
+
+```python
+def math(operator):
+    if operator == "add":
+        return lambda x, y: x + y
+    elif operator == "sub":
+        return lambda x, y: x - y
+    elif operator == "mul":
+        return lambda x, y: x * y
+    elif operator == "div":
+        return lambda x, y: x / y
+
+spam = math("add")(5, 9)
+print(spam) # prints 14
+div = math("div")
+eggs = div(5, 10)
+print(eggs) # prints 0.5
+```
+
+Ok that's a longer snippet than usual. What's going on here?
+
+Well we're using lambdas as you can see. We'll see a factory function that uses regular `def`s soon. We've got a block of `if` and `elif` statements and return a different function based on a string that is passed as an argument. So when we call `math("add")` that returns the function `lambda x, y: x + y`. 
+
+`math("add")(5, 9)` becomes `(lambda x, y: x + y)(5, 9)`. We pass `5` and `9` as arguments to the function, the function adds them together and returns `14`.
+
+#### Closures
+
+Closures are a huge topic and are definitly something that we will come back to later on. Again my goal with this section is to introduce and demistify. So what is a closure? Well it's a way of binding mutable data to a function. What does that mean? Let's see:
+
+```python
+def makeCounter(name):
+    count = 0
+    def counter():
+        nonlocal count
+        count += 1
+        print(name, " is: ",count)
+    return counter
+
+spam = makeCounter("Spam")
+eggs = makeCounter("Eggs")
+spam() # prints "Spam  is:  1"
+spam() # prints "Spam  is:  2"
+spam() # prints "Spam  is:  3"
+spam() # prints "Spam  is:  4"
+eggs() # prints "Eggs  is:  1"
+```
+
+What the heck is going on here? Well we have a function called `makeCounter` that accepts a name. The first thing `makeCounter` does it sets a variable called `count` to zero. Then it defines a function called `counter` which brings in that `count` variable via the `nonlocal` keyword, increments it, and prints it along with the counter's `name`. Then `makeCounter` returns that function.
+
+We call `makeCounter` a couple of times, once with the name "Spam" and once with "Eggs". We store those functions in variables called, appropriately enough, `spam` and `eggs`. And when we call those functions they count up! How is that possible?
+
+Our `makeCounter` function is a factory function, it makes and returns functions. Each one of those functions is unique and it carries the scope of `makeCounter` with it. Basically each function we make has its own copy of `count` to manipulate and print. 
+
+As always it's ok if you find this confusing. Confusion is to your brain what the strain of working out is to your muscles. Closures are are powerful and really leverage a good understanding of scope which is why we are talking about them so early. 
 
 ## Data Structures
+In this section we are learning about Python's built in data structures. So far the only things we have been able to store are the basic datatypes I described at the beginning. By the end of this section we'll be able to store anything.
 
-### Lists, 
+### Lists and Tuples
+```python
+l = [3, 7, 9, 2, 4]
+```
+The above is a list. We are storing it in the variable `l`. You can think of a list as a row of cubby holes. The first hole contains a `3`, then a `7`, and so on. Each one of these cubby holes is a variable, we can look inside and change the contents of each. We get the contents of an entry in the list with brackets containing an index.
 
-### Iterators, Generators, and Comprehensions
+```python
+l = [3, 7, 9, 2, 4]
+
+print(l[3]) # 3 is the index. What does this print out?
+```
+
+What does `l[3]` evaluate to? `2`. But that's the fourth element! In Python, as in most languages, list indicies start at `0`. So `l[0]` evaluates to `3`. This can be tricky for new programmers to remember but soon enough it'll be second nature.
+
+I mentioned that we could assign to entries in a list. Let's do that. 
+
+```python
+```
 
 ### Sets and Dictionaries
+
+### Iterators, Generators, and Comprehensions
 
 ### Pass by Object
 
