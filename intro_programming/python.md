@@ -4,10 +4,18 @@
 
 ### Pep Talk
 
+First I want to briefly talk about my favorite topic: Me. My name is Riley Miller and I’ve been programming for about ten years now. Let us travel back to the ancient past of... 2011. I was in college and I took an intro to programming with python class. Because why not? 
+I learned so very much in those ten weeks. But I had never programmed before and the material came very, very fast. I wasn’t able to complete most of the projects in time and that’s the thing about programming, there are no B minuses. The program either works and you get an A, or it doesn’t and you get a D. Despite having an incredible time I got the latter.
+The story doesn’t end there, obviously. The class was only offered once a year so I had to wait a whole 12 months to take it again. In that time I never stopped poking and prodding at the language. I figured I was bad at it but at least I was having fun. And when I took the class again? I got an A+.
+There are a few morals to the story but I think the most relevant one is keep trying, have fun, and you will have a breakthrough. One day programming will click for you like it did for me and nothing will be able to stop you. The analogy I use is of climbing a mountain. When you start out at the bottom it is almost overwhelming. There is so much to know, so much to learn, so much to wrap your mind around. Most people don’t even bother climbing the mountain. But you take a step and take another. You watch the path for a while, make progress, and look back at the mountain. The top doesn’t look any closer. I’ve been programming for 10 years and there is still so much I don’t know. But when you look behind yourself you will see how much ground you have covered. I want this class to be your first step. 
+There is something I never want to hear in this class: “I am bad at this”. 
+
 ### Setup
 
+This section is a little dry I'm not going to lie. I would encourage you to go through the steps of setting up your environment that I will outline below but if you just want to hit the ground running there are websites like repl.it where you can run Python code in the browser and don't have to bother with any setup. Either way get to the point where you can write and run the following code.
+
 ```python
-print("Hello World!")
+print("Hello World!") # prints "Hello World!" to the console.
 ```
 
 ## Expressions
@@ -126,9 +134,21 @@ print(40 + 2) # This is a very important number!
 
 Everything after the `#` is ignored by Python. The above is a trivial example but learning how to write good comments is a very important skill. When you're writing out more complicated programs it can often be a good idea to spell out how that program should work with comments before you write any of the code.
 
-There is a school of thought that suggests you should not use comments, that the code you write should be so well formatted and your choice of variable and function names should be so descriptive that no comments are necessary. Ignore these people. Certainly variables and functions should be named descriptive things but comments are incredibly important for helping others understand your code. They will even help you when you go back to your code after six months and have forgotten how everything works.
+There is a school of thought that suggests you should not use comments, that the code you write should be so well formatted and your choice of variable and function names should be so descriptive that no comments are necessary. Ignore these people. Certainly variables and functions should be named descriptive and sensible things but comments are incredibly important for helping others understand your code. They will even help you when you go back to your code after six months and have forgotten how everything works.
+
+#### Our friend Gary
+
+Meet Gary. You will get to know Gary, although that may not be their name. You will program with Gary as a hobbyist or a coworker. Gary is a competent programmer but does not like to comment his code and he usually uses terse or even single character names for the variables and functions he writes. For this reason it can be hard to read and understand his code. In the exercises to follow you will be tasked with not just writing code but reading code and explaining what it does. Sometimes Gary's code. But don't be too hard on him, because we are all Gary sometimes. We study his code as an exercise to mentally simulate the code we see and figure out what it does. You'll be spending much more time reading and interpreting code then you will writing it.
 
 ### Errors
+
+As the saying goes "To err is human, to debug is divine." You will make mistakes because everybody does and Python will do its best to report those mistakes to you as errors. There are a few different major kinds.
+
+Syntax errors are the easiest kind to deal with. That means your code is malformed somehow and won't run at all. Python's error messages for syntax errors are...usually helpful but can be a little vague. As always I would encourage you to look for code that does something similar and see what you might be missing. Common sources for syntax errors are messed up indentation, missing parentheses, quotation marks, commas, or colons. Syntax highlighting comes in handy here. If you're using any kind of code editor it will color parts of your code based on what they are, strings, functions, reserved keywords, whatever.
+
+Runtime errors happen, as the name suggests, when you are actually running your program. The annoying part of these errors is that they may only occur some of the time so debugging them is less straightforward than syntax errors. For this reason stricter languages are designed to catch potential runtime errors in the compile stage. There are a ton of different kinds of runtime errors like if you try to divide by `0` or use a variable that doesn't exist yet. 
+
+Finally the most nefarious kind of error is one where Python doesn't complain at all but your program doesn't do what you expect. Like if you try to sum a list of numbers and the result is `0`. Stay strong brave coding adventurer, because this is the kind of error that no language no matter how well designed can completely protect you from. Our strategy for this kind of bug is to test test test. Write a little bit of code and make sure it does what you expect. Get in the practice of mentally simulating your code before you run it and making sure the results match. Hot showers, dancing in the moonlight, and responsible use of controlled substances are not proven to help but are nevertheless recommended.
 
 ### Operators
 
@@ -493,6 +513,8 @@ print(a) # what does this print?
 
 The `+=` operator adds some value to the variable and sets the value to the result of that expression. This syntax is a little confusing for newcomers so I'll weave it in gradually as we go.
 
+
+
 ### If, Elif, and Else
 
 We are still in fancy calculator land. What we really want is to be able to make decisions based on some data. We want conditional execution. Thus:
@@ -649,7 +671,7 @@ This code sample and the last will print exactly the same thing. That's what `wh
 
 1: Write a loop that prints the even numbers up to `10`. And don't just use five print statements you goof.
 
-Output:
+Expected Output:
 ```python
 0
 2
@@ -660,7 +682,7 @@ Output:
 
 2: Write a loop that prints all of the numbers less than `10` that are evenly divisible by `3` or `5`. Remember the modulo operator!
 
-Output:
+Expected Output:
 ```python
 0
 3
@@ -669,7 +691,12 @@ Output:
 9
 ```
 
-3: Sum up all the numbers 
+3: Sum up all the odd numbers from 1 to 100 and print the result.
+
+Expected Output:
+```python
+2500
+```
 
 ### The Collatz Conjecture
 
@@ -818,10 +845,72 @@ Our function `printSum` accepts two numbers. Inside of that function we define a
 
 ### Globals and Purity
 
+Global variables have a bad reputation in programming circles and not without cause. Reading from global variables generally isn't as much of a problem, that's why Python lets you do it without the `global` keyword. But writing to global variables is another story. If you can write to a global variable in more than one place your code will be much harder to understand. For example while you are operating on a function that reads and writes to a global variable you need to keep in mind how every other function that reads and writes to that variable will be affected and will affect the function you're working on.
+
+The problem is a little more general than global variables specifically. It's really about managing mutable state. Pretty much every statement above modifies the state of the program or alters how it is modified. It might change the value in a variable or write to a file or ping a web api. Each of these is an instance of a side effect and we should be explicit when a function has side effects both in how that function is named and the documentation. A function name like `addCustomerToDatabase` pretty clearly has side effects.
+
+Where possible we should use functions that do not have side effects. These are called "pure" functions. We'll see more examples of them later on.
+
 ### Bits and bobs
 This section covers some more advanced aspects of functions. Most texts would save them for much later or elide them entirely but this is not most texts. I'm bringing up these topics now because they shouldn't intimidate you and your picture of functions in Python would be incomplete without them. So strap in!
 
 #### Default arguments
+
+Sometimes you want to provide default values for an argument to a function. Let's look at an example:
+
+```python
+def exp(x, y = 2): # Raises x to the power y. If a y value is not provided default to 2
+    return x ** y
+
+print( exp(10) ) # prints 100
+print( exp(10, 2) ) # prints 100
+print( exp(10, 3) ) # prints 1000
+```
+
+You can see the first time the function is called only one argument is provided and so it uses the default value of `2`. 
+
+You cannot have parameters with default arguments before required arguments. The following code will result in an error:
+
+```python
+def exp(x = 10, y): # Raises x to the power y. If a y value is not provided default to 2
+    return x ** y
+
+print( exp(10) ) # ERROR!
+```
+
+So there is this thing called the Drake Equation that is sort of a thought experiment for how common alien civilizations might be. 
+You can read about it here: https://en.wikipedia.org/wiki/Drake_equation
+A simplified version goes something like this:
+
+```python
+def drakeEquation(S = 1000000000, fp = 1.2, ne = 0.01, fl = 0.001, fi = 0.001, fc = 0.5):
+    # S: the number of stars close enough to detect
+    # fp: the probability a star will form planets
+    # ne: the probability that a planet could support life
+    # fl: the probability that life actually forms
+    # fi: the probability that life is intelligent
+    # fc: the probability that life forms a civilization we can detect
+    return S * fp * ne * fl * fi * fc
+```
+
+Obviously the actual values for most of these numbers is unknown, it's more of a thought experiment. Even so it's a good example for us because the function accepts a lot of inputs.
+
+Suppose we want to call the function but we want to change one of the arguments from the default. If we want to change the first argument this is simple enough, just call the function with one argument
+```python
+print( drakeEquation(1000000000000) ) # our telescopes have gotten more sensitive maybe
+```
+
+But if we want to supply an argument to a parameter that isn't first like `ne` that would be a pain. Fortunately Python has a convenient way of doing just this. Check it out:
+
+```python
+print( drakeEquation(ne = 0.1) ) # turns out more planets are habitable than we thought
+```
+
+We can supply multiple arguments at once this way too.
+
+```python
+print( drakeEquation(ne = 0.1, fc = 0.8) )
+```
 
 #### Multiple return
 
@@ -849,7 +938,7 @@ def countUp(count, i = 0):
 countUp(10) # prints the numbers 0  to 9
 ```
 
-Compare that code to the `while` loop that does the same thing and you'll see basically the same bits in a different arraingement. Now both of these functions have an `if` statement inside of them and there is a good reason for that. Just like with `while` it is easy to get in infinite loops with recursion. Fortunately Python will actually throw an error if you recurse too many times.The condition that stops recursion is called 
+Compare that code to the `while` loop that does the same thing and you'll see basically the same bits in a different arrangement. Now both of these functions have an `if` statement inside of them and there is a good reason for that. Just like with `while` it is easy to get in infinite loops with recursion. Fortunately Python will actually throw an error if you recurse too many times.The condition that stops recursion is called the base case. 
 
 ```python
 def factorial(x):
@@ -950,7 +1039,7 @@ Well we're using lambdas as you can see. We'll see a factory function that uses 
 
 #### Closures
 
-Closures are a huge topic and are definitly something that we will come back to later on. Again my goal with this section is to introduce and demistify. So what is a closure? Well it's a way of binding mutable data to a function. What does that mean? Let's see:
+Closures are a huge topic and are definitely something that we will come back to later on. Again my goal with this section is to introduce and demistify. So what is a closure? Well it's a way of binding mutable data to a function. What does that mean? Let's see:
 
 ```python
 def makeCounter(name):
