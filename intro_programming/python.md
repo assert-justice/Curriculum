@@ -1087,9 +1087,107 @@ What does `l[3]` evaluate to? `2`. But that's the fourth element! In Python, as 
 I mentioned that we could assign to entries in a list. Let's do that. 
 
 ```python
+l = [3, 7, 9, 2, 4]
+l[3] = 5
+print(l) # prints [3, 7, 9, 5, 4]
 ```
 
+This works a lot like assigning a variable. You have the name of the list `l` and use brackets to get the right cubby hole in the list. Then you can assign to it with an equals sign and an expression as normal.
+
+You might want to add a new entry to a list and make the list longer. This is accomplished with `append`.
+
+```python
+l = [3, 7, 9, 2, 4]
+l.append(5)
+print(l) # prints [3, 7, 9, 2, 4, 5], the list now has six elements!
+```
+
+This is the first method we have seen. A method is a function that is attached to an object. We'll get more into objects later on but every list has a bunch of methods you can call that modify that list somehow. We're about to see a few more.
+
+So with `append` we can add new entries to the end of a list. What if we want to insert them at some arbitrary point? Well that is accomplished, appropriately enough, with the `insert` method.
+
+```python
+l = [3, 7, 9, 2, 4]
+l.insert(2, 5)
+print(l) # prints [3, 7, 5, 9, 2, 4]
+```
+
+Now `insert` accepts two arguments: the first is the index where the new item should be inserted and the second is the item itself. So what we are saying in the snippet above is: "Insert a `5` at index `2` in the array. Every entry after that is pushed back by one space."
+You can imagine the items after the index are "shoved aside" to make room. It's worth pointing out that inserting is slower than appending. I wouldn't worry about it too much but I would feel remiss if I didn't mention it.
+
+So we can add things to the array just fine. How do we remove them? We `pop` them!
+
+```python
+l = [3, 7, 9, 2, 4]
+l.pop()
+print(l) # prints [3, 7, 9, 2], the list now only contains four elements!
+```
+
+This method name might sound a little whimsical to you. Push and pop are both operations associated with a data structure called a stack, which is basically a list where you can only add or remove things at the end. Why `append` is not called "push" like it is in JavaScript I'm not sure. What you probably expect is that there is a way to remove arbitrary elements from a list. What you might not expect is that this is also accomplished with `pop` by passing it an optional argument. Behold:
+
+```python
+l = [3, 7, 9, 2, 4]
+l.pop(2)
+print(l) # prints [3, 7, 2, 4]
+```
+
+In the above snippet we pop a number from index `2` (in this case a `9`) and everything after that element is shifted left by one space. 
+
+It is worth pointing out that `pop` returns the element it removes from the array. 
+
+```python
+l = [3, 7, 9, 2, 4]
+last = l.pop()
+print(l) # prints [3, 7, 9, 2]
+print(last) # prints 4
+```
+
+Getting the length of a list is super easy, their is a built in function just for this purpose: `len`
+
+```python
+l = [3, 7, 9, 2, 4]
+print(len(l)) # prints 5
+```
+
+It is possible to loop over a list. The full treatment of this topic will have to wait for the section on iterators but we will dip our toe in. How would we print out each number in an array of numbers? The following code will do the trick: 
+
+
+```python
+l = [3, 7, 9, 2, 4]
+i = 0
+while i < len(l):
+    print(l[i]) # prints the numbers, each on their own line
+    i += 1
+```
+
+Let's unpack that a little bit. On the first couple lines we set up the list and initialize the variable `i` to be `0`. Then we have a `while` statement. Our conditional is `i < len(l)`. `len(l)` evaluates to `5` in this case so the conditional becomes `i < 5` so we know `i` will go from `0` to `4` and then halt thanks to the last line `i += 1`. Nestled in between the while and where we increment `i` is where we look up an element from `l` by the index `i` and print it out!
+
+Now *puts on Morpheus glasses* what if I told you there was a better way? Check this out: 
+
+```python
+l = [3, 7, 9, 2, 4]
+for number in l:
+    print(l) # prints exactly the same thing as above
+```
+
+Now that looks tidier doesn't it! If you're coming from another language you might be wondering where the C style for loop is and the answer is that Python doesn't have one. Python's `for` loop is what other languages like C# might call a forEach loop. It iterates over a collection of elements and lets you run some code on each one.
+
+You might need the index still. The best way of accessing the indices of the elements as well as the elements themselves is with the `enumerate` built in function. Note that `enumerate` makes use of multiple return. Each time it is called in the loop it returns first an index and then the element currently being considered. I'll be honest I have to double check the order they come in basically every time I use this function.
+
+```python
+l = [3, 7, 9, 2, 4]
+for i, number in enumerate(l):
+    print("index: ", i, "number: ", number)
+    # prints the following:
+    # index:  0 number:  3
+    # index:  1 number:  7
+    # index:  2 number:  9
+    # index:  3 number:  2
+    # index:  4 number:  4
+```
 ### Sets and Dictionaries
+
+### Strings!
 
 ### Iterators, Generators, and Comprehensions
 
