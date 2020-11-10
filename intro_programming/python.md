@@ -1070,7 +1070,9 @@ As always it's ok if you find this confusing. Confusion is to your brain what th
 ## Data Structures
 In this section we are learning about Python's built in data structures. So far the only things we have been able to store are the basic datatypes I described at the beginning. By the end of this section we'll be able to store anything.
 
-### Lists and Tuples
+### Lists
+
+#### The Basics
 ```python
 l = [3, 7, 9, 2, 4]
 ```
@@ -1084,6 +1086,16 @@ print(l[3]) # 3 is the index. What does this print out?
 
 What does `l[3]` evaluate to? `2`. But that's the fourth element! In Python, as in most languages, list indicies start at `0`. So `l[0]` evaluates to `3`. This can be tricky for new programmers to remember but soon enough it'll be second nature.
 
+In Python we can use negative indicies to access elements from the end of the array rather than the start. 
+
+```python
+l = [3, 7, 9, 2, 4]
+print( l[-1] ) # prints 4
+print( l[-3] ) # prints 9
+```
+
+You can think of negative indicies as sort of "wrapping around" to the back of the list. It can be pretty convenient.
+
 I mentioned that we could assign to entries in a list. Let's do that. 
 
 ```python
@@ -1093,6 +1105,22 @@ print(l) # prints [3, 7, 9, 5, 4]
 ```
 
 This works a lot like assigning a variable. You have the name of the list `l` and use brackets to get the right cubby hole in the list. Then you can assign to it with an equals sign and an expression as normal.
+
+#### Slicing
+
+List slicing (and string slicing which is very similar) is a powerful technique for getting a copy of a segment of a list. The syntax is a little bit terse but I'm here to help you out.
+
+```python
+l = [3, 7, 9, 2, 4]
+print( l[:] )   # prints [3, 7, 9, 2, 4], a whole copy!
+print( l[2:] )  # prints [9, 2, 4], the list from index 2 onwards
+print( l[:2] )  # prints [3, 7], the list up until index 2
+print( l[1:3] ) # prints [7, 9], the list from index 1 until index 3
+```
+
+So the tricky thing about slicing is that both the start and end indicies are optional. As you can see in the above snippets the index before the colon indicates where the slice should start. It defaults to `0` if not provided. The index after the colon indicates the index *right after* where the slice should stop so the element at that index is not included in the slice. It defaults to the length of the list if not provided.
+
+#### Methods
 
 You might want to add a new entry to a list and make the list longer. This is accomplished with `append`.
 
@@ -1149,8 +1177,8 @@ l = [3, 7, 9, 2, 4]
 print(len(l)) # prints 5
 ```
 
+#### Looping
 It is possible to loop over a list. The full treatment of this topic will have to wait for the section on iterators but we will dip our toe in. How would we print out each number in an array of numbers? The following code will do the trick: 
-
 
 ```python
 l = [3, 7, 9, 2, 4]
@@ -1172,6 +1200,8 @@ for number in l:
 
 Now that looks tidier doesn't it! If you're coming from another language you might be wondering where the C style for loop is and the answer is that Python doesn't have one. Python's `for` loop is what other languages like C# might call a forEach loop. It iterates over a collection of elements and lets you run some code on each one.
 
+Let's look at the syntax. We have the new keyword `for` of course. Then the name of a variable and then another keyword `in`. Finally we have the list we are iterating over. Essentially what Python does is it loops through the entire list, storing each entry in the list in a variable that we can then operate on. In the snippet above the that variable is called `number` but it can be anything descriptive.
+
 You might need the index still. The best way of accessing the indices of the elements as well as the elements themselves is with the `enumerate` built in function. Note that `enumerate` makes use of multiple return. Each time it is called in the loop it returns first an index and then the element currently being considered. I'll be honest I have to double check the order they come in basically every time I use this function.
 
 ```python
@@ -1185,9 +1215,16 @@ for i, number in enumerate(l):
     # index:  3 number:  2
     # index:  4 number:  4
 ```
-### Sets and Dictionaries
+
+### Tuples
+
+To talk about tuples we need to discuss how they are different from lists. Let's look at a snippet:
 
 ### Strings!
+
+### Sets and Dictionaries
+
+Let's move on to some spicier data structures. 
 
 ### Iterators, Generators, and Comprehensions
 
